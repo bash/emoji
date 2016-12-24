@@ -1,7 +1,7 @@
 import babel from 'rollup-plugin-babel'
 import uglify from 'rollup-plugin-uglify'
 
-const isProduction = process.env[ 'NODE_ENV' ] === 'production'
+const isProduction = process.env[ 'BUILD_ENV' ] === 'production'
 const plugins = [ babel() ]
 
 if (isProduction) {
