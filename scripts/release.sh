@@ -4,7 +4,7 @@ FILES=${@:1}
 CURRENT_DIRECTORY=`pwd`
 TEMP_DIR=$(mktemp -d)
 REMOTE_URL=$(git config --get remote.origin.url)
-BRANCH="master"
+BRANCH="gp-pages"
 
 cleanup() {
     rm -rf ${TEMP_DIR}
