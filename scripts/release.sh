@@ -38,4 +38,4 @@ TIMESTAMP=$(date +"%s")
 git commit -m "Build #${TIMESTAMP}"
 
 echo "Pushing..."
-git push origin master
+git push origin ${BRANCH}
