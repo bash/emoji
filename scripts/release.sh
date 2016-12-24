@@ -38,5 +38,4 @@ TIMESTAMP=$(date +"%s")
 git commit -m "Build #${TIMESTAMP}"
 
 echo "Pushing..."
-git push upstream master
 git push origin master
