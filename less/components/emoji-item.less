@@ -1,0 +1,16 @@
+.emoji-item {
+  display: flex;
+  align-items: center;
+  transition: opacity .1s;
+
+  > .image {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+  }
+
+  &.-no-match {
+    opacity: .2;
+    order: 1000;
+  }
+}
