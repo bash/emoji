@@ -1,10 +1,19 @@
 #!/bin/bash
 
-FILES=${@:1}
+BRANCH="gh-pages"
+FILES=(
+  build/js/emoji.js
+  build/js/polyfills.js
+  build/css/emoji.css
+  index.html
+)
+
 CURRENT_DIRECTORY=`pwd`
 TEMP_DIR=$(mktemp -d)
 REMOTE_URL=$(git config --get remote.origin.url)
-BRANCH="gp-pages"
+
+
+set -e
 
 cleanup() {
     rm -rf ${TEMP_DIR}
@@ -26,8 +35,9 @@ done
 
 echo "Copying new files..."
 
-for FILE in ${FILES}; do
-    cp -R ${FILE} ${TEMP_DIR}/
+for FILE in ${FILES[@]}; do
+    mkdir -p ${TEMP_DIR}/$(dirname ${FILE})
+    cp -R ${FILE} ${TEMP_DIR}/${FILE}
 done
 
 cd ${TEMP_DIR}
