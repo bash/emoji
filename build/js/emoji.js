@@ -56,129 +56,59 @@
   var EmojiItem = function (_HTMLElement) {
     inherits(EmojiItem, _HTMLElement);
 
-    function EmojiItem(name, imageSrc) {
+    function EmojiItem() {
       classCallCheck(this, EmojiItem);
-
-      var _this = possibleConstructorReturn(this, Object.getPrototypeOf(EmojiItem).call(this));
-
-      _this._name = name;
-      _this._imageSrc = imageSrc;
-      _this.className = 'emoji-item';
-
-      return _this;
+      return possibleConstructorReturn(this, Object.getPrototypeOf(EmojiItem).apply(this, arguments));
     }
 
     createClass(EmojiItem, [{
-      key: 'connectedCallback',
-      value: function connectedCallback() {
-
-        var image = document.createElement('img');
-        image.src = this._imageSrc;
-        image.className = 'image';
-
-        this.appendChild(image);
-
-        var name = document.createElement('span');
-        name.innerText = ':' + this._name + ':';
-        name.className = 'name';
-
-        this.appendChild(name);
-
-        this.setAttribute('emoji-name', this._name);
+      key: 'emojiName',
+      get: function get() {
+        return this.getAttribute('emoji-name');
       }
     }]);
     return EmojiItem;
   }(HTMLElement);
-
-  var ENDPOINT_URL = 'https://api.github.com/emojis';
 
   var EmojiList = function (_HTMLElement) {
     inherits(EmojiList, _HTMLElement);
 
     function EmojiList() {
       classCallCheck(this, EmojiList);
-
-      /**
-       * 
-       * @type {Array<string>}
-       */
-      var _this = possibleConstructorReturn(this, Object.getPrototypeOf(EmojiList).call(this));
-
-      _this._emojiNames = [];
-
-      /**
-       * 
-       * @type {Map<string,string>}
-       */
-      _this._emojis = new Map();
-
-      /**
-       * 
-       * @type {Map<string,Element>}
-       */
-      _this._elements = new Map();
-      return _this;
+      return possibleConstructorReturn(this, Object.getPrototypeOf(EmojiList).apply(this, arguments));
     }
 
     createClass(EmojiList, [{
-      key: 'connectedCallback',
-      value: function connectedCallback() {
-        var _this2 = this;
-
-        fetch(ENDPOINT_URL).then(function (resp) {
-          return resp.json();
-        }).then(function (emojis) {
-
-          var names = Object.keys(emojis);
-          var map = names.map(function (key) {
-            return [key, emojis[key]];
-          });
-
-          _this2._emojis = new Map(map);
-          _this2._emojiNames = names;
-
-          _this2._render();
-        });
-      }
-    }, {
-      key: '_render',
-      value: function _render() {
-        var _this3 = this;
-
-        this._emojis.forEach(function (imageSrc, name) {
-          window.setTimeout(function () {
-            var item = new EmojiItem(name, imageSrc);
-
-            _this3.appendChild(item);
-
-            _this3._elements.set(name, item);
-          });
-        });
-      }
-    }, {
       key: 'filter',
       value: function filter(query) {
 
         var normalizedQuery = query.toLowerCase().trim();
-        var matches = {};
 
-        this._emojiNames.forEach(function (name) {
+        var result = this.emojiItems.map(function (item) {
+          var name = item.emojiName;
           var order = name.indexOf(normalizedQuery);
           var show = order !== -1;
 
-          matches[name] = { order: order, show: show };
+          return { item: item, order: order, show: show };
         });
 
-        this._elements.forEach(function (element, name) {
-          var match = matches[name];
+        result.forEach(function (_ref) {
+          var item = _ref.item;
+          var order = _ref.order;
+          var show = _ref.show;
 
-          if (match.show) {
-            element.style.order = match.order;
-            element.style.display = '';
+          if (show) {
+            item.style.order = order;
+            item.style.display = '';
           } else {
-            element.style.display = 'none';
+            item.style.display = 'none';
           }
         });
+      }
+    }, {
+      key: 'emojiItems',
+      get: function get() {
+        return Array.from(this.querySelectorAll('emoji-item'));
       }
     }]);
     return EmojiList;
