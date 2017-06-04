@@ -3,6 +3,12 @@ import { EmojiSearch } from './search'
 import { EmojiList } from './list'
 import { emojis } from '../data/emojis'
 
+const compareNumbers = (a, b) => {
+  if (a === b) return 0
+  if (a > b) return 1
+  return -1
+}
+
 const filterItems = (items, query) => {
   if (query.length === 0) {
     return items
@@ -11,9 +17,9 @@ const filterItems = (items, query) => {
   const normalizedQuery = query.trim().toLowerCase()
 
   return items
-    .map(({ name, ...rest }) => ({ name, order: name.indexOf(normalizedQuery), ...rest }))
-    .filter(({ order }) => order !== -1)
-    .sort((a, b) => a.order > b.order)
+    .map(({ name, ...rest }) => ({ name, sorting: name.indexOf(normalizedQuery), ...rest }))
+    .filter(({ sorting }) => sorting !== -1)
+    .sort((a, b) => compareNumbers(a.sorting, b.sorting))
 }
 
 export class EmojiApp extends Component {
