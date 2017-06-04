@@ -5449,6 +5449,12 @@ const emojis = [{
   "image": "https://assets-cdn.github.com/images/icons/emoji/unicode/1f4a4.png?v7"
 }];
 
+const compareNumbers = (a, b) => {
+  if (a === b) return 0;
+  if (a > b) return 1;
+  return -1;
+};
+
 const filterItems = (items, query) => {
   if (query.length === 0) {
     return items;
@@ -5459,11 +5465,11 @@ const filterItems = (items, query) => {
   return items.map((_ref) => {
     let name = _ref.name,
         rest = objectWithoutProperties(_ref, ['name']);
-    return _extends({ name, order: name.indexOf(normalizedQuery) }, rest);
+    return _extends({ name, sorting: name.indexOf(normalizedQuery) }, rest);
   }).filter((_ref2) => {
-    let order = _ref2.order;
-    return order !== -1;
-  }).sort((a, b) => a.order > b.order);
+    let sorting = _ref2.sorting;
+    return sorting !== -1;
+  }).sort((a, b) => compareNumbers(a.sorting, b.sorting));
 };
 
 class EmojiApp extends Component {
