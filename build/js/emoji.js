@@ -5454,10 +5454,12 @@ const filterItems = (items, query) => {
     return items;
   }
 
+  const normalizedQuery = query.trim().toLowerCase();
+
   return items.map((_ref) => {
     let name = _ref.name,
         rest = objectWithoutProperties(_ref, ['name']);
-    return _extends({ name, order: name.indexOf(query) }, rest);
+    return _extends({ name, order: name.indexOf(normalizedQuery) }, rest);
   }).filter((_ref2) => {
     let order = _ref2.order;
     return order !== -1;
