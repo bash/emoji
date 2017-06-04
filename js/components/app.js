@@ -8,8 +8,10 @@ const filterItems = (items, query) => {
     return items
   }
 
+  const normalizedQuery = query.trim().toLowerCase()
+
   return items
-    .map(({ name, ...rest }) => ({ name, order: name.indexOf(query), ...rest }))
+    .map(({ name, ...rest }) => ({ name, order: name.indexOf(normalizedQuery), ...rest }))
     .filter(({ order }) => order !== -1)
     .sort((a, b) => a.order > b.order)
 }
