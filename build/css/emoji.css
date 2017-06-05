@@ -35,8 +35,8 @@ input[type="time"]::-webkit-inner-spin-button,
 input[type="week"]::-webkit-inner-spin-button {
   height: 100%;
 }
-input[type="search"]::-webkit-search-cancel-button {
-  display: none;
+input[type="search"] {
+  -webkit-appearance: none;
 }
 :-moz-ui-invalid:not(output) {
   box-shadow: none;
@@ -143,7 +143,6 @@ ul,
 var,
 video,
 wbr,
-emoji-list, emoji-item,
 ::before,
 ::after {
   box-sizing: inherit;
@@ -179,7 +178,7 @@ body {
   box-sizing: border-box;
 }
 body {
-  font-family: Inconsolata, mono;
+  font-family: Inconsolata, monospace;
 }
 .emoji-item {
   display: flex;
@@ -191,10 +190,6 @@ body {
   height: 24px;
   margin-right: 8px;
 }
-.emoji-item.-no-match {
-  opacity: .2;
-  order: 1000;
-}
 .emoji-list {
   display: flex;
   flex-direction: column;
@@ -205,9 +200,6 @@ body {
 .emoji-search {
   width: 100%;
   display: block;
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
   border: 1px solid #ededed;
   padding: 8px 16px;
 }
