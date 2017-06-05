@@ -42,8 +42,9 @@ input[type="week"]::-webkit-inner-spin-button {
   height: 100%;
 }
 
-input[type="search"]::-webkit-search-cancel-button {
-  display: none;
+input[type="search"] {
+  // Stop safari from displaying searchboxes like native search boxes
+  -webkit-appearance: none;
 }
 
 :-moz-ui-invalid:not(output) {
