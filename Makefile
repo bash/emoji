@@ -10,7 +10,7 @@ ROLLUP_CONFIG := .rollup.config.js
 
 .PHONY: all clean lint deps
 
-all: build/css/$(PROJECT_NAME).css build/js/$(PROJECT_NAME).js js/data/emojis.js
+all: build/css/$(PROJECT_NAME).css js/data/emojis.js build/js/$(PROJECT_NAME).js
 
 clean:
 	rm -rf build/ js/data/emojis.js
