@@ -14,7 +14,7 @@ const plugins = [
     comments: false,
     presets: [
       [
-        'env',
+        '@babel/env',
         {
           'modules': false,
           'targets': {
@@ -30,12 +30,11 @@ const plugins = [
       ]
     ],
     plugins: [
-      'external-helpers',
-      'transform-class-properties',
+      '@babel/proposal-class-properties',
       'transform-node-env-inline',
-      'transform-object-rest-spread',
+      '@babel/proposal-object-rest-spread',
       [
-        'transform-react-jsx', { 'pragma': 'h' }
+        '@babel/transform-react-jsx', { 'pragma': 'h' }
       ]
     ]
   })
@@ -47,6 +46,8 @@ if (isProduction) {
 
 export default {
   plugins: plugins,
-  sourceMap: !isProduction,
-  format: 'iife'
+  output: {
+    sourcemap: !isProduction,
+    format: 'iife',
+  },
 }
