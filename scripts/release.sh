@@ -3,7 +3,6 @@
 BRANCH="gh-pages"
 FILES=(
   build/js/emoji.js
-  build/js/polyfills.js
   build/css/emoji.css
   index.html
 )
