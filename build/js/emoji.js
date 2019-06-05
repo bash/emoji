@@ -63,6 +63,12 @@
 	  return obj;
 	}
 
+	function applyRef(ref, value) {
+	  if (ref != null) {
+	    if (typeof ref == 'function') ref(value);else ref.current = value;
+	  }
+	}
+
 	var defer = typeof Promise == 'function' ? Promise.resolve().then.bind(Promise.resolve()) : setTimeout;
 
 	var IS_NON_DIMENSIONAL = /acit|ex(?:s|g|n|p|$)|rph|ows|mnc|ntw|ine[ch]|zoo|^ord/i;
@@ -75,11 +81,9 @@
 	}
 
 	function rerender() {
-	  var p,
-	      list = items;
-	  items = [];
+	  var p;
 
-	  while (p = list.pop()) {
+	  while (p = items.pop()) {
 	    if (p._dirty) renderComponent(p);
 	  }
 	}
@@ -131,8 +135,8 @@
 	  if (name === 'className') name = 'class';
 
 	  if (name === 'key') ; else if (name === 'ref') {
-	    if (old) old(null);
-	    if (value) value(node);
+	    applyRef(old, null);
+	    applyRef(value, node);
 	  } else if (name === 'class' && !isSvg) {
 	    node.className = value || '';
 	  } else if (name === 'style') {
@@ -193,7 +197,7 @@
 	function flushMounts() {
 	  var c;
 
-	  while (c = mounts.pop()) {
+	  while (c = mounts.shift()) {
 	    if (c.componentDidMount) c.componentDidMount();
 	  }
 	}
@@ -371,7 +375,7 @@
 	  if (component) {
 	    unmountComponent(component);
 	  } else {
-	    if (node['__preactattr_'] != null && node['__preactattr_'].ref) node['__preactattr_'].ref(null);
+	    if (node['__preactattr_'] != null) applyRef(node['__preactattr_'].ref, null);
 
 	    if (unmountOnly === false || node['__preactattr_'] == null) {
 	      removeNode(node);
@@ -470,7 +474,7 @@
 	    }
 	  }
 
-	  if (component.__ref) component.__ref(component);
+	  applyRef(component.__ref, component);
 	}
 
 	function renderComponent(component, renderMode, mountAll, isChild) {
@@ -593,7 +597,7 @@
 	  }
 
 	  if (!isUpdate || mountAll) {
-	    mounts.unshift(component);
+	    mounts.push(component);
 	  } else if (!skip) {
 	    if (component.componentDidUpdate) {
 	      component.componentDidUpdate(previousProps, previousState, snapshot);
@@ -657,14 +661,14 @@
 	  if (inner) {
 	    unmountComponent(inner);
 	  } else if (base) {
-	    if (base['__preactattr_'] && base['__preactattr_'].ref) base['__preactattr_'].ref(null);
+	    if (base['__preactattr_'] != null) applyRef(base['__preactattr_'].ref, null);
 	    component.nextBase = base;
 	    removeNode(base);
 	    recyclerComponents.push(component);
 	    removeChildren(base);
 	  }
 
-	  if (component.__ref) component.__ref(null);
+	  applyRef(component.__ref, null);
 	}
 
 	function Component(props, context) {
@@ -781,9 +785,10 @@
 	  return target;
 	}
 
-	const EmojiSearch = ({
-	  onSearch
-	}) => {
+	const EmojiSearch = (_ref) => {
+	  let {
+	    onSearch
+	  } = _ref;
 	  return h("div", {
 	    class: "search-container"
 	  }, h("input", {
@@ -838,11 +843,15 @@
 	    this._unobserve();
 	  }
 
-	  render(_ref, {
-	    loaded
-	  }) {
-	    let src = _ref.src,
-	        preview = _ref.preview,
+	  render(_ref, _ref2) {
+	    let {
+	      loaded
+	    } = _ref2;
+
+	    let {
+	      src,
+	      preview
+	    } = _ref,
 	        props = _objectWithoutProperties(_ref, ["src", "preview"]);
 
 	    const _src = loaded ? src : preview;
@@ -855,32 +864,38 @@
 
 	}
 
-	const EmojiItem = ({
-	  name,
-	  image
-	}) => {
+	const FALLBACK_IMAGE = 'https://github.githubassets.com/images/icons/emoji/unicode/2753.png';
+	const EmojiItem = (_ref) => {
+	  let {
+	    name,
+	    image
+	  } = _ref;
 	  return h("div", {
 	    class: "emoji-item"
 	  }, h(Image, {
 	    src: image,
-	    preview: "https://assets-cdn.github.com/images/icons/emoji/unicode/2754.png?v7",
+	    preview: FALLBACK_IMAGE,
 	    alt: name,
 	    class: "image"
 	  }), h("span", null, ":", name, ":"));
 	};
 
-	const EmojiList = ({
-	  items
-	}) => {
+	const EmojiList = (_ref) => {
+	  let {
+	    items
+	  } = _ref;
 	  return h("div", {
 	    class: "emoji-list"
-	  }, items.map(({
-	    name,
-	    image
-	  }) => h(EmojiItem, {
-	    name: name,
-	    image: image
-	  })));
+	  }, items.map((_ref2) => {
+	    let {
+	      name,
+	      image
+	    } = _ref2;
+	    return h(EmojiItem, {
+	      name: name,
+	      image: image
+	    });
+	  }));
 	};
 
 	const emojis = [{
@@ -4313,6 +4328,12 @@
 	  "name": "sao_tome_principe",
 	  "image": "https://github.githubassets.com/images/icons/emoji/unicode/1f1f8-1f1f9.png?v8"
 	}, {
+	  "name": "sassy_man",
+	  "image": "https://github.githubassets.com/images/icons/emoji/unicode/1f481-2642.png?v8"
+	}, {
+	  "name": "sassy_woman",
+	  "image": "https://github.githubassets.com/images/icons/emoji/unicode/1f481.png?v8"
+	}, {
 	  "name": "satellite",
 	  "image": "https://github.githubassets.com/images/icons/emoji/unicode/1f4e1.png?v8"
 	}, {
@@ -5422,16 +5443,21 @@
 
 	  const normalizedQuery = query.trim().toLowerCase();
 	  return items.map((_ref) => {
-	    let name = _ref.name,
+	    let {
+	      name
+	    } = _ref,
 	        rest = _objectWithoutProperties(_ref, ["name"]);
 
 	    return _objectSpread({
 	      name,
 	      sorting: name.indexOf(normalizedQuery)
 	    }, rest);
-	  }).filter(({
-	    sorting
-	  }) => sorting !== -1).sort((a, b) => compareNumbers(a.sorting, b.sorting));
+	  }).filter((_ref2) => {
+	    let {
+	      sorting
+	    } = _ref2;
+	    return sorting !== -1;
+	  }).sort((a, b) => compareNumbers(a.sorting, b.sorting));
 	};
 
 	class EmojiApp extends Component {
@@ -5440,9 +5466,10 @@
 	    this.state.query = '';
 	  }
 
-	  render({}, {
-	    query
-	  }) {
+	  render(_ref3, _ref4) {
+	    let {
+	      query
+	    } = _ref4;
 	    return h("main", {
 	      class: "page-wrap"
 	    }, h(EmojiSearch, {
