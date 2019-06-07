@@ -29,7 +29,7 @@
     "harmony-collections": "^0.3.8",
     "less": "^3.8.1",
     "postcss-cli": "^6.0.0",
-    "rollup": "^1.14.2",
+    "rollup": "^1.14.3",
     "rollup-plugin-babel": "^4.0.3",
     "rollup-plugin-node-resolve": "^5.0.1",
     "rollup-plugin-uglify": "^6.0.0",
