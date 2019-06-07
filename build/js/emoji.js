@@ -5486,4 +5486,3 @@
 	render(h(EmojiApp, null), document.body);
 
 }());
-//# sourceMappingURL=emoji.js.map
