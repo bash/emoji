@@ -1,7 +1,7 @@
 import { h } from 'preact'
 import { Image } from './image'
 
-const FALLBACK_IMAGE = 'https://github.githubassets.com/images/icons/emoji/unicode/2753.png'
+const FALLBACK_IMAGE = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAGKADAAQAAAABAAAAGAAAAADiNXWtAAAAIUlEQVRIDe3QAQ0AAADCoPdP7ewBESgMGDBgwIABAwY+MAkYAAGvX7w8AAAAAElFTkSuQmCC'
 
 export const EmojiItem = ({ name, image }) => {
   return (
