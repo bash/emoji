@@ -1,12 +1,7 @@
 import { h, Component } from 'preact'
 
 export class Image extends Component {
-  constructor () {
-    super()
-
-    // noinspection EqualityComparisonWithCoercionJS
-    this.state.loaded = (window.IntersectionObserver == null)
-  }
+  state = { loaded: window.IntersectionObserver == null }
 
   _observerCallback = (entries, observer) => {
     if (entries[0].intersectionRatio <= 0) {

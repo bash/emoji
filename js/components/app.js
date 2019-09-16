@@ -23,11 +23,7 @@ const filterItems = (items, query) => {
 }
 
 export class EmojiApp extends Component {
-  constructor () {
-    super()
-
-    this.state.query = ''
-  }
+  state = { query: '' }
 
   render ({}, { query }) {
     return (

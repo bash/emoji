@@ -5,10 +5,7 @@ import resolve from 'rollup-plugin-node-resolve'
 const isProduction = process.env[ 'BUILD_ENV' ] === 'production'
 
 const plugins = [
-  resolve({
-    jsnext: true,
-    modulesOnly: true
-  }),
+  resolve(),
   babel({
     babelrc: false,
     comments: false,
