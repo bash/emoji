@@ -4,18 +4,17 @@
   width: 100%;
   display: block;
   padding: 11px 20px;
-  max-width: 522px;
-  position: fixed;
+  margin: auto;
+  max-width: calc(var(--content-width) - var(--horizontal-spacing) * 2);
   background-color: rgba(0, 0, 0, 0.19);
   border-radius: 20px;
-  top: 20px;
 }
 
 .search-container {
-  padding: 40px 0 40px;
-  background-color: @background-color;
+  box-sizing: border-box;
+  padding: 20px var(--horizontal-spacing);
+  background-color: rgba(255, 255, 255, 0.95);
   position: fixed;
   top: 0;
   width: 100%;
-  max-width: 552px;
 }

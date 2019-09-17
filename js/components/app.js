@@ -1,4 +1,4 @@
-import { h, Component } from 'preact'
+import { h, Component, Fragment } from 'preact'
 import { EmojiSearch } from './search'
 import { EmojiList } from './list'
 import { emojis } from '../data/emojis'
@@ -27,10 +27,12 @@ export class EmojiApp extends Component {
 
   render ({}, { query }) {
     return (
-      <main class="page-wrap">
+      <Fragment>
         <EmojiSearch onSearch={(query) => this.setState({ query })} />
-        <EmojiList items={filterItems(emojis, query)} />
-      </main>
+        <main class="page-wrap">
+          <EmojiList items={filterItems(emojis, query)} />
+        </main>
+      </Fragment>
     )
   }
 }
