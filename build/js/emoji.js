@@ -5100,15 +5100,15 @@
       let {
         query
       } = _ref4;
-      return h("main", {
-        class: "page-wrap"
-      }, h(EmojiSearch, {
+      return h(y, null, h(EmojiSearch, {
         onSearch: query => this.setState({
           query
         })
-      }), h(EmojiList, {
+      }), h("main", {
+        class: "page-wrap"
+      }, h(EmojiList, {
         items: filterItems(emojis, query)
-      }));
+      })));
     }
 
   }
