@@ -6,6 +6,13 @@ html {
   background-color: var(--background-level-0-color);
 }
 
+@supports (supported-color-schemes: light dark) {
+  html {
+    supported-color-schemes: light dark;
+    background-color: initial;
+  }
+}
+
 body {
   box-sizing: border-box;
 }
