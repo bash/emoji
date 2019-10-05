@@ -16,8 +16,7 @@ clean:
 	rm -rf build/ js/data/emojis.js
 
 deps:
-	npm prune
-	npm install
+	yarn install
 
 lint:
 	lessc --lint less/$(PROJECT_NAME).less
