@@ -1,8 +1,8 @@
 import babel from 'rollup-plugin-babel'
-import uglify from 'rollup-plugin-uglify'
+import minify from 'rollup-plugin-babel-minify'
 import resolve from 'rollup-plugin-node-resolve'
 
-const isProduction = process.env[ 'BUILD_MODE' ] === 'release'
+const isRelease = process.env[ 'BUILD_MODE' ] === 'release'
 
 const plugins = [
   resolve(),
@@ -28,7 +28,6 @@ const plugins = [
     ],
     plugins: [
       '@babel/proposal-class-properties',
-      'transform-node-env-inline',
       '@babel/proposal-object-rest-spread',
       [
         '@babel/transform-react-jsx', { 'pragma': 'h' }
@@ -37,14 +36,14 @@ const plugins = [
   })
 ]
 
-if (isProduction) {
-  plugins.push(uglify)
+if (isRelease) {
+  plugins.push(minify())
 }
 
 export default {
-  plugins: plugins,
+  plugins,
   output: {
-    sourcemap: !isProduction,
+    sourcemap: !isRelease,
     format: 'iife',
   },
 }
