@@ -10,7 +10,7 @@ files=(
 
 public_dir=public
 
-for file in ${FILES[@]}
+for file in ${files[@]}
 do
     mkdir -p "$public_dir/$(dirname "$file")"
     cp -R "$file" "$public_dir/$file"
