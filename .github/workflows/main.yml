@@ -27,7 +27,7 @@ jobs:
       run: make lint
 
     - name: Pre Deploy
-      run: ./scripts/pre-deploy.sh
+      run: ./scripts/pre-deploy.py
 
     - name: Deploy
       uses: peaceiris/actions-gh-pages@ea833f5400d130b25f7577b76537ffa6860dfcda
