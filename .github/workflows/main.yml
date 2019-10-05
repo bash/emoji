@@ -1,6 +1,9 @@
 name: Main workflow
 
-on: [push]
+on:
+  push:
+    paths-ignore:
+    - readme.md
 
 jobs:
   deploy:
