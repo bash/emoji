@@ -1,0 +1,33 @@
+name: CI
+
+on: [push]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '10.x'
+
+    - name: Install dependencies
+      run: make deps
+
+    - name: Build
+      run: make
+
+    - name: Lints
+      run: make lint
+
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@ea833f5400d130b25f7577b76537ffa6860dfcda
+      if: success() && github.ref == 'refs/heads/master' && github.repository == 'bash/bash.github.io'
+      env:
+        ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+        PUBLISH_BRANCH: gh-pages
+        PUBLISH_DIR: ./build
+      with:
+        emptyCommits: false
