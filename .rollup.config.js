@@ -38,7 +38,7 @@ const plugins = [
 ]
 
 if (isProduction) {
-  plugins.push(uglify())
+  plugins.push(uglify)
 }
 
 export default {
