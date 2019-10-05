@@ -24,7 +24,7 @@ jobs:
 
     - name: Deploy
       uses: peaceiris/actions-gh-pages@ea833f5400d130b25f7577b76537ffa6860dfcda
-      if: success() && github.ref == 'refs/heads/master' && github.repository == 'bash/bash.github.io'
+      if: success() && github.ref == 'refs/heads/master' && github.repository == 'bash/emoji'
       env:
         ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
         PUBLISH_BRANCH: gh-pages
