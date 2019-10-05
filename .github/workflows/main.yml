@@ -25,6 +25,8 @@ jobs:
 
     - name: Build
       run: make
+      env:
+        BUILD_MODE: release
 
     - name: Lints
       run: make lint

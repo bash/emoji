@@ -23,7 +23,7 @@ lint:
 
 build/css/$(PROJECT_NAME).css: $(LESS_FILES)
 	@mkdir -p $(@D)
-ifeq ($(BUILD_ENV), production)
+ifeq ($(BUILD_MODE), release)
 	lessc less/$(PROJECT_NAME).less | postcss -u autoprefixer -u cssnano -o $@
 else
 	lessc less/$(PROJECT_NAME).less | postcss -u autoprefixer -o $@

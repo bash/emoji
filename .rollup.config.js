@@ -2,7 +2,7 @@ import babel from 'rollup-plugin-babel'
 import uglify from 'rollup-plugin-uglify'
 import resolve from 'rollup-plugin-node-resolve'
 
-const isProduction = process.env[ 'BUILD_ENV' ] === 'production'
+const isProduction = process.env[ 'BUILD_MODE' ] === 'release'
 
 const plugins = [
   resolve(),
