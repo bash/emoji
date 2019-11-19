@@ -1,19 +1,19 @@
 SHELL := /bin/bash
-PATH  := ./node_modules/.bin:$(PATH)
+PATH  := $(PATH):./node_modules/.bin
 
 PROJECT_NAME := emoji
 
 LESS_FILES := $(shell find less -name "*.less")
-JS_FILES := $(shell find js -name "*.js")
+JS_FILES := $(shell find js -name '*.tsx' -or -name '*.ts')
 
 ROLLUP_CONFIG := .rollup.config.js
 
 .PHONY: all clean lint deps
 
-all: build/css/$(PROJECT_NAME).css js/data/emojis.js build/js/$(PROJECT_NAME).js
+all: build/css/$(PROJECT_NAME).css js/data/emojis.ts build/js/$(PROJECT_NAME).js
 
 clean:
-	rm -rf build/ js/data/emojis.js
+	rm -rf build/ js/data/emojis.ts
 
 deps:
 	yarn install
@@ -31,9 +31,9 @@ endif
 
 build/js/$(PROJECT_NAME).js: $(JS_FILES)
 	@mkdir -p $(@D)
-	rollup -c $(ROLLUP_CONFIG) -o $@ js/$(PROJECT_NAME).js
+	./node_modules/.bin/rollup -c $(ROLLUP_CONFIG) -o $@ js/$(PROJECT_NAME).tsx
 
-js/data/emojis.js:
+js/data/emojis.ts:
 	@mkdir -p $(@D)
 	echo -n "export const emojis = " > $@
 	curl https://api.github.com/emojis | node scripts/transform-list.js >> $@
