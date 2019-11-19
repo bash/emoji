@@ -1,10 +1,14 @@
 import babel from 'rollup-plugin-babel'
 import minify from 'rollup-plugin-babel-minify'
 import resolve from 'rollup-plugin-node-resolve'
+import rollupTypescript from 'rollup-plugin-typescript'
+import typescript from 'typescript'
+import tslib from 'tslib'
 
 const isRelease = process.env[ 'BUILD_MODE' ] === 'release'
 
 const plugins = [
+  rollupTypescript({ typescript, tslib, tsconfig: 'tsconfig.json' }),
   resolve(),
   babel({
     babelrc: false,

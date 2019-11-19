@@ -1,5 +1,3 @@
-import { h } from 'preact'
-
 export const EmojiSearch = ({ onSearch }) => {
   return (
     <div class="search-container">

@@ -1,9 +1,15 @@
-import { h, Component } from 'preact'
+import { Component } from 'preact'
 
-export class Image extends Component {
+type State = { loaded: boolean }
+
+export type ImageProps = { src: string, preview: string, [key: string]: any }
+
+export class Image extends Component<ImageProps, State> {
+  private _observer: IntersectionObserver|null
+
   state = { loaded: window.IntersectionObserver == null }
 
-  _observerCallback = (entries, observer) => {
+  _observerCallback = (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
     if (entries[0].intersectionRatio <= 0) {
       return
     }
@@ -12,7 +18,7 @@ export class Image extends Component {
     this.setState({ loaded: true })
   }
 
-  _observe (image) {
+  _observe (image: HTMLImageElement) {
     this._unobserve()
 
     if (!image || this.state.loaded) {
@@ -40,6 +46,6 @@ export class Image extends Component {
   render ({ src, preview, ...props }, { loaded }) {
     const _src = loaded ? src : preview
 
-    return <img src={_src} ref={(image) => this._observe(image)} {...props} />
+    return <img src={_src} ref={(image: HTMLImageElement) => this._observe(image)} {...props} />
   }
 }

@@ -1,4 +1,4 @@
-import { h, Component, Fragment } from 'preact'
+import { Component, Fragment } from 'preact'
 import { EmojiSearch } from './search'
 import { EmojiList } from './list'
 import { emojis } from '../data/emojis'

@@ -1,4 +1,3 @@
-import { h } from 'preact'
 import { EmojiItem } from './item'
 
 export const EmojiList = ({ items }) => {
