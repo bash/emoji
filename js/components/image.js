@@ -4,12 +4,11 @@ export class Image extends Component {
   state = { loaded: window.IntersectionObserver == null }
 
   _observerCallback = (entries, observer) => {
-    if (entries[0].intersectionRatio <= 0) {
-      return
+    const newestEntry = entries[entries.length - 1]
+    if (newestEntry.isIntersecting) {
+      observer.disconnect()
+      this.setState({ loaded: true })
     }
-
-    observer.disconnect()
-    this.setState({ loaded: true })
   }
 
   _observe (image) {
