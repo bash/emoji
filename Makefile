@@ -1,5 +1,4 @@
 SHELL := /bin/bash
-PATH  := ./node_modules/.bin:$(PATH)
 
 PROJECT_NAME := emoji
 
@@ -19,19 +18,19 @@ deps:
 	yarn install
 
 lint:
-	lessc --lint less/$(PROJECT_NAME).less
+	yarn run -s lessc --lint less/$(PROJECT_NAME).less
 
 build/css/$(PROJECT_NAME).css: $(LESS_FILES)
 	@mkdir -p $(@D)
 ifeq ($(BUILD_MODE), release)
-	lessc less/$(PROJECT_NAME).less | postcss -u autoprefixer -u cssnano -o $@
+	yarn run -s lessc less/$(PROJECT_NAME).less | yarn run -s postcss -u autoprefixer -u cssnano -o $@
 else
-	lessc less/$(PROJECT_NAME).less | postcss -u autoprefixer -o $@
+	yarn run -s lessc less/$(PROJECT_NAME).less | yarn run -s postcss -u autoprefixer -o $@
 endif
 
 build/js/$(PROJECT_NAME).js: $(JS_FILES)
 	@mkdir -p $(@D)
-	rollup -c $(ROLLUP_CONFIG) -o $@ js/$(PROJECT_NAME).js
+	yarn run -s rollup -c $(ROLLUP_CONFIG) -o $@ js/$(PROJECT_NAME).js
 
 js/data/emojis.js:
 	@mkdir -p $(@D)
